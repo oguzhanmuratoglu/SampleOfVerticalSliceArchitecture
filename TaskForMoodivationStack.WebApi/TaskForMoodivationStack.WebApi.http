@@ -1,0 +1,34 @@
+@TaskForMoodivationStack.WebApi_HostAddress = http://localhost:5128
+
+POST {{TaskForMoodivationStack.WebApi_HostAddress}}/api/Customers/RegisterCustomer
+Accept: application/json
+Content-Type: application/json
+
+{
+  "firstName": "string",
+  "lastName": "string",
+  "email": "string@string.com",
+  "password": "string1234"
+}
+
+###
+
+POST {{TaskForMoodivationStack.WebApi_HostAddress}}/api/Orders/CreateOrder
+Accept: application/json
+Content-Type: application/json
+
+{
+  "customerId": "a45eb317-1aa5-4922-ba59-9414142d9827",
+  "priceCurrency": "TRY",
+  "priceAmount": 30
+}
+
+###
+
+
+GET {{TaskForMoodivationStack.WebApi_HostAddress}}/api/Orders/a45eb317-1aa5-4922-ba59-9414142d9827
+Accept: application/json
+###
+
+
+//https://localhost:7122/api/Customers/RegisterCustomer

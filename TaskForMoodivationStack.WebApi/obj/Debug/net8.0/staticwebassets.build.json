@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "j2pzqJah09GRpTYhV8hXbu3ve2Ziay6HC8Dnhtgdcko=",
+  "Source": "TaskForMoodivationStack.WebApi",
+  "BasePath": "_content/TaskForMoodivationStack.WebApi",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
