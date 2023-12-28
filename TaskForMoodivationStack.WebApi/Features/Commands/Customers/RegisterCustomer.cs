@@ -1,86 +1,89 @@
-﻿using Carter;
+﻿using Corex.Model.Infrastructure;
 using FluentValidation;
-using Mapster;
 using MediatR;
-using TaskForMoodivationStack.WebApi.Contexts;
-using TaskForMoodivationStack.WebApi.Contracts;
-using TaskForMoodivationStack.WebApi.Domain.Customers;
+using TaskForMoodivationStack.WebApi.Context;
+using TaskForMoodivationStack.WebApi.Services.Customers;
 using TaskForMoodivationStack.WebApi.Shared;
-using Error = TaskForMoodivationStack.WebApi.Shared.Error;
+using TaskForMoodivationStack.WebApi.Validation;
+using TaskForMoodivationStack.WebApi.Validations.BusinessValidations;
+using TaskForMoodivationStack.WebApi.Validations.RequestValidations;
 
 
 namespace TaskForMoodivationStack.WebApi.Features.Commands.Customers;
 
 public class RegisterCustomer
 {
-    public class Command : IRequest<Result<CustomerEntity>>
+    public record Command(string FirstName, string LastName, string Email, string Password) : IRequest<Response>;
+    public class Response : ResultModel
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
+        public Guid Id { get; set; }
     }
 
-    public class Validator : AbstractValidator<Command>
-    {
-        public Validator()
-        {
-            RuleFor(c=>c.FirstName).NotEmpty();
-            RuleFor(c => c.LastName).NotEmpty();
-            RuleFor(c=>c.Email).MinimumLength(6).MaximumLength(32).NotEmpty().EmailAddress();
-            RuleFor(c=>c.Password).MinimumLength(8).MaximumLength(64).NotEmpty();
 
+    public class Validator(ApplicationDbContext context) : IValidationHandler<Command>
+    {
+        public async Task<ResultModel> Validate(Command request)
+        {
+            var requestValidationRules = new CustomerRegisterRequestValidation();
+            var requestValidateResult = requestValidationRules.Validate(request);
+            if (!requestValidateResult.IsValid)
+            {
+                return ResultModel.Error(requestValidationRules.MapValidationErrorsToMessages(requestValidateResult.Errors));
+            }
+
+            var businessValidationRules = new CustomerRegisterBusinessValidation();
+            var emailValidationResult = await businessValidationRules.CheckDuplicateEmailAsync(context, request.Email);
+            if (!emailValidationResult.IsSuccess)
+            {
+                return emailValidationResult;
+            }
+            var nameValidationResult = await businessValidationRules.CheckDuplicateNameAsync(context, request.FirstName, request.LastName);
+            if (!nameValidationResult.IsSuccess)
+            {
+                return nameValidationResult;
+            }
+            return ResultModel.Ok();
         }
     }
 
-    internal sealed class Handler(ApplicationDbContext context, IValidator<Command> validator) : IRequestHandler<Command, Result<CustomerEntity>>
+    internal sealed class Handler : IRequestHandler<Command, Response>
     {
-        public async Task<Result<CustomerEntity>> Handle(Command request, CancellationToken cancellationToken)
-        {
-            var validationResult = validator.Validate(request);
-            if (!validationResult.IsValid)
-            {
-                var errors = validationResult.Errors.Select(v =>
-                                new Error(v.ErrorCode, v.ErrorMessage)).ToList();
+        private readonly ApplicationDbContext _context;
+        private readonly ILogger<Handler> _logger;
 
-                return Result<CustomerEntity>.Fail(errors);
-            }
-            var customer = new CustomerEntity
-            {
-                Id = Guid.NewGuid(),
-                FirstName = request.FirstName,
-                LastName = request.LastName,
-                Email = request.Email,
-                Password = request.Password,
-                CreatedDate = DateTime.Now
-            };
-            context.Add(customer);
-            await context.SaveChangesAsync(cancellationToken);
-            return Result<CustomerEntity>.Success(customer);
+        public Handler(ApplicationDbContext context, ILogger<Handler> logger)
+        {
+            _context = context;
+            _logger = logger;
         }
-    }
-}
-
-
-
-public class CreateCustomerEndPoint : ICarterModule
-{
-    public void AddRoutes(IEndpointRouteBuilder app)
-    {
-        app.MapPost("api/Customers/RegisterCustomer", async (RegisterCustomerRequest request, ISender sender) =>
+        public async Task<Response> Handle(Command request, CancellationToken cancellationToken)
         {
-            var command = request.Adapt<RegisterCustomer.Command>();
-
-            var result = await sender.Send(command);
-            if (result.IsFailure)
+            try
             {
-                var errors = result.Errors.Select(v =>
-                                new Error(v.Code, v.Message)).ToList();
+                var customerService = new CustomerService(_context);
+                return await customerService.AddCustomer(request, cancellationToken);
 
-                return Results.BadRequest(Result<CustomerEntity>.Fail(errors));
+
+            }
+            catch (Exception ex)
+            {
+
+                _logger.LogError(ex, "Something went wrong. There was a problem during customer registration.");
+
+                return new Response
+                {
+                    IsSuccess = false,
+                    Messages = new List<MessageItem>
+                    {
+                        new MessageItem
+                        {
+                            Code = $"DB_ERROR_00{ex.HResult}",
+                            Message = "An error occurred while processing your request. Please try again later."
+                        }
+                    }
+                };
             }
 
-            return Results.Ok(Result<CustomerEntity>.Success(result.Data));
-        });
+        }
     }
 }

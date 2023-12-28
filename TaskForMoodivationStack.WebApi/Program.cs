@@ -1,8 +1,11 @@
-using Carter;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using FluentValidation;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
-using TaskForMoodivationStack.WebApi.Contexts;
-using TaskForMoodivationStack.WebApi.Features.Commands.Customers;
+using TaskForMoodivationStack.WebApi.Behaviours;
+using TaskForMoodivationStack.WebApi.Context;
+using TaskForMoodivationStack.WebApi.Infrastructure.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +16,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
+
 builder.Services.AddDbContext<ApplicationDbContext>(o =>
     o.UseInMemoryDatabase("MyInMemoryDb"));
 
@@ -20,10 +25,13 @@ var assembly = typeof(Program).Assembly;
 
 builder.Services.AddMediatR(config =>
     config.RegisterServicesFromAssembly(assembly));
-
-builder.Services.AddCarter();
-
 builder.Services.AddValidatorsFromAssembly(assembly);
+builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
+
+
+builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
+builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder => containerBuilder.
+RegisterModule(new ServiceModule()));
 
 var app = builder.Build();
 
@@ -36,7 +44,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapCarter();
+//app.UseCustomException();
 
 app.UseAuthorization();
 

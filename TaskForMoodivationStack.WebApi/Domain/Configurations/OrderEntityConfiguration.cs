@@ -1,23 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
-using System;
-using TaskForMoodivationStack.WebApi.Contexts;
-using TaskForMoodivationStack.WebApi.Domain.Customers;
-using TaskForMoodivationStack.WebApi.Domain.Services;
-using TaskForMoodivationStack.WebApi.Domain.ValueObjects;
-using System.Reflection.Emit;
+using TaskForMoodivationStack.WebApi.Domain.Entities;
 
-namespace TaskForMoodivationStack.WebApi.Domain.Orders;
-
-public class OrderEntity
-{
-    public Guid Id { get; set; }
-    public Guid CustomerId { get; set; }
-    public CustomerEntity CustomerEntity { get; set; }
-    public string OrderNumber { get; set; }
-    public Money TotalPrice { get; set; }
-    public DateTime CreatedDate { get; set; }
-}
+namespace TaskForMoodivationStack.WebApi.Domain.Configurations;
 
 public class OrderEntityConfiguration : IEntityTypeConfiguration<OrderEntity>
 {

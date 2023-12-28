@@ -1,9 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Reflection;
-using TaskForMoodivationStack.WebApi.Domain.Customers;
-using TaskForMoodivationStack.WebApi.Domain.Orders;
+using TaskForMoodivationStack.WebApi.Domain.Entities;
 
-namespace TaskForMoodivationStack.WebApi.Contexts;
+namespace TaskForMoodivationStack.WebApi.Context;
 
 public class ApplicationDbContext : DbContext
 {

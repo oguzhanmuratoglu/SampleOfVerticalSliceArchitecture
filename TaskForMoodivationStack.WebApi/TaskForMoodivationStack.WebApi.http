@@ -1,24 +1,24 @@
 @TaskForMoodivationStack.WebApi_HostAddress = http://localhost:5128
 
-POST {{TaskForMoodivationStack.WebApi_HostAddress}}/api/Customers/RegisterCustomer
+POST {{TaskForMoodivationStack.WebApi_HostAddress}}/api/Customers/Register
 Accept: application/json
 Content-Type: application/json
 
 {
   "firstName": "string",
-  "lastName": "string",
-  "email": "string@string.com",
+  "lastName": "striasdsng",
+  "email": "string@stsadring.com",
   "password": "string1234"
 }
 
 ###
 
-POST {{TaskForMoodivationStack.WebApi_HostAddress}}/api/Orders/CreateOrder
+POST {{TaskForMoodivationStack.WebApi_HostAddress}}/api/Orders/Add
 Accept: application/json
 Content-Type: application/json
 
 {
-  "customerId": "a45eb317-1aa5-4922-ba59-9414142d9827",
+  "customerId": "fdebb987-6188-48e6-ad13-a34c32451f5f",
   "priceCurrency": "TRY",
   "priceAmount": 30
 }

@@ -1,83 +1,82 @@
-﻿using Carter;
-using FluentValidation;
-using Mapster;
+﻿using Corex.Model.Infrastructure;
 using MediatR;
-using TaskForMoodivationStack.WebApi.Contexts;
-using TaskForMoodivationStack.WebApi.Contracts;
-using TaskForMoodivationStack.WebApi.Domain.Customers;
-using TaskForMoodivationStack.WebApi.Domain.Orders;
-using TaskForMoodivationStack.WebApi.Domain.Services;
-using TaskForMoodivationStack.WebApi.Domain.ValueObjects;
+using TaskForMoodivationStack.WebApi.Context;
+using TaskForMoodivationStack.WebApi.Services.Customers;
+using TaskForMoodivationStack.WebApi.Services.Orders;
 using TaskForMoodivationStack.WebApi.Shared;
+using TaskForMoodivationStack.WebApi.Validation;
+using TaskForMoodivationStack.WebApi.Validations.BusinessValidations;
+using TaskForMoodivationStack.WebApi.Validations.RequestValidations;
 
 namespace TaskForMoodivationStack.WebApi.Features.Commands.Orders;
 
 public class CreateOrder
 {
-    public class Command : IRequest<Result<OrderEntity>>
+    public record Command(Guid CustomerId, string PriceCurrency, decimal PriceAmount) : IRequest<Response>;
+    public class Response : ResultModel
     {
-        public Guid CustomerId { get; set; }
-        public string PriceCurrency { get; set; }
-        public decimal PriceAmount { get; set; }
+        public Guid Id { get; set; }
     }
 
-    public class Validator : AbstractValidator<Command>
+
+    public class Validator(ApplicationDbContext context) : IValidationHandler<Command>
     {
-        public Validator()
+        public async Task<ResultModel> Validate(Command request)
         {
-            RuleFor(c => c.CustomerId).NotEmpty();
-            RuleFor(c => c.PriceCurrency).NotEmpty();
-            RuleFor(c => c.PriceAmount).NotEmpty();
+            var requestValidationRules = new CreateOrderRequestValidation();
+            var requestValidateResult = requestValidationRules.Validate(request);
+            if (!requestValidateResult.IsValid)
+            {
+                return ResultModel.Error(requestValidationRules.MapValidationErrorsToMessages(requestValidateResult.Errors));
+            }
+
+            var businessValidationRules = new CreateOrderBusinessValidation();
+            var customerValidationResult = await businessValidationRules.CheckCustomerIdAsync(context, request.CustomerId);
+            if (!customerValidationResult.IsSuccess)
+            {
+                return customerValidationResult;
+            }
+            return ResultModel.Ok();
         }
     }
 
-    internal sealed class Handler(ApplicationDbContext context, IValidator<Command> validator) : IRequestHandler<Command, Result<OrderEntity>>
+    internal sealed class Handler : IRequestHandler<Command, Response>
     {
-        public async Task<Result<OrderEntity>> Handle(Command request, CancellationToken cancellationToken)
-        {
-            var validationResult = validator.Validate(request);
-            if (!validationResult.IsValid)
-            {
-                var errors = validationResult.Errors.Select(v =>
-                                new Error(v.ErrorCode, v.ErrorMessage)).ToList();
+        private readonly ApplicationDbContext _context;
+        private readonly ILogger<Handler> _logger;
 
-                return Result<OrderEntity>.Fail(errors);
-            }
-            var orderNumberService = new OrderNumberService(context);
-            var order = new OrderEntity
-            {
-                Id = Guid.NewGuid(),
-                CustomerId = request.CustomerId,
-                OrderNumber = orderNumberService.GetNewOrderNumber(),
-                TotalPrice = new Money(request.PriceCurrency,request.PriceAmount),
-                CreatedDate = DateTime.Now,
-            };
-            context.Add(order);
-            await context.SaveChangesAsync(cancellationToken);
-            return Result<OrderEntity>.Success(order);
+        public Handler(ApplicationDbContext context, ILogger<Handler> logger)
+        {
+            _context = context;
+            _logger = logger;
         }
-    }
-}
-
-
-
-public class CreateCustomerEndPoint : ICarterModule
-{
-    public void AddRoutes(IEndpointRouteBuilder app)
-    {
-        app.MapPost("api/Orders/CreateOrder", async (CreateOrderRequest request, ISender sender) =>
+        public async Task<Response> Handle(Command request, CancellationToken cancellationToken)
         {
-            var command = request.Adapt<CreateOrder.Command>();
-
-            var result = await sender.Send(command);
-            if (result.IsFailure)
+            try
             {
-                var errors = result.Errors.Select(v =>
-                                new Error(v.Code, v.Message)).ToList();
-                return Results.BadRequest(Result<OrderEntity>.Fail(errors));
+                var orderService = new OrderService(_context);
+                return await orderService.AddOrder(request, cancellationToken);
+
+            }
+            catch (Exception ex)
+            {
+
+                _logger.LogError(ex, "Something went wrong. There was an error while creating the order");
+
+                return new Response
+                {
+                    IsSuccess = false,
+                    Messages = new List<MessageItem>
+                    {
+                        new MessageItem
+                        {
+                            Code = $"DB_ERROR_00{ex.HResult}",
+                            Message = "An error occurred while processing your request. Please try again later."
+                        }
+                    }
+                };
             }
 
-            return Results.Ok(Result<OrderEntity>.Success(result.Data));
-        });
+        }
     }
 }

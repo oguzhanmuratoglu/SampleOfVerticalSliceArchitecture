@@ -45,7 +45,7 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
-            "Carter": {
+            "Autofac.Extensions.DependencyInjection": {
               "target": "Package",
               "version": "[8.0.0, )"
             },
@@ -56,10 +56,6 @@
             "FluentValidation.DependencyInjectionExtensions": {
               "target": "Package",
               "version": "[11.9.0, )"
-            },
-            "Mapster": {
-              "target": "Package",
-              "version": "[7.4.0, )"
             },
             "MediatR": {
               "target": "Package",

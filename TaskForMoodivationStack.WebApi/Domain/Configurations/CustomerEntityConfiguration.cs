@@ -1,18 +1,8 @@
-﻿
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
+using TaskForMoodivationStack.WebApi.Domain.Entities;
 
-namespace TaskForMoodivationStack.WebApi.Domain.Customers;
-
-public class CustomerEntity
-{
-    public Guid Id { get; set; }
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
-    public string Email { get; set; }
-    public string Password { get; set; }
-    public DateTime CreatedDate { get; set; }
-}
+namespace TaskForMoodivationStack.WebApi.Domain.Configurations;
 
 public class CustomerEntityConfiguration : IEntityTypeConfiguration<CustomerEntity>
 {

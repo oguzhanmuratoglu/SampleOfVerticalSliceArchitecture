@@ -12,18 +12,14 @@ D:\Users\Oguzhan\source\repos\TaskForMoodivationStack\TaskForMoodivationStack.We
 D:\Users\Oguzhan\source\repos\TaskForMoodivationStack\TaskForMoodivationStack.WebApi\bin\Debug\net8.0\TaskForMoodivationStack.WebApi.runtimeconfig.json
 D:\Users\Oguzhan\source\repos\TaskForMoodivationStack\TaskForMoodivationStack.WebApi\bin\Debug\net8.0\TaskForMoodivationStack.WebApi.dll
 D:\Users\Oguzhan\source\repos\TaskForMoodivationStack\TaskForMoodivationStack.WebApi\bin\Debug\net8.0\TaskForMoodivationStack.WebApi.pdb
-D:\Users\Oguzhan\source\repos\TaskForMoodivationStack\TaskForMoodivationStack.WebApi\bin\Debug\net8.0\Carter.dll
 D:\Users\Oguzhan\source\repos\TaskForMoodivationStack\TaskForMoodivationStack.WebApi\bin\Debug\net8.0\Corex.Model.Infrastructure.dll
 D:\Users\Oguzhan\source\repos\TaskForMoodivationStack\TaskForMoodivationStack.WebApi\bin\Debug\net8.0\FluentValidation.dll
 D:\Users\Oguzhan\source\repos\TaskForMoodivationStack\TaskForMoodivationStack.WebApi\bin\Debug\net8.0\FluentValidation.DependencyInjectionExtensions.dll
-D:\Users\Oguzhan\source\repos\TaskForMoodivationStack\TaskForMoodivationStack.WebApi\bin\Debug\net8.0\Mapster.dll
-D:\Users\Oguzhan\source\repos\TaskForMoodivationStack\TaskForMoodivationStack.WebApi\bin\Debug\net8.0\Mapster.Core.dll
 D:\Users\Oguzhan\source\repos\TaskForMoodivationStack\TaskForMoodivationStack.WebApi\bin\Debug\net8.0\MediatR.dll
 D:\Users\Oguzhan\source\repos\TaskForMoodivationStack\TaskForMoodivationStack.WebApi\bin\Debug\net8.0\MediatR.Contracts.dll
 D:\Users\Oguzhan\source\repos\TaskForMoodivationStack\TaskForMoodivationStack.WebApi\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.dll
 D:\Users\Oguzhan\source\repos\TaskForMoodivationStack\TaskForMoodivationStack.WebApi\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Abstractions.dll
 D:\Users\Oguzhan\source\repos\TaskForMoodivationStack\TaskForMoodivationStack.WebApi\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.InMemory.dll
-D:\Users\Oguzhan\source\repos\TaskForMoodivationStack\TaskForMoodivationStack.WebApi\bin\Debug\net8.0\Microsoft.Extensions.DependencyModel.dll
 D:\Users\Oguzhan\source\repos\TaskForMoodivationStack\TaskForMoodivationStack.WebApi\bin\Debug\net8.0\Microsoft.OpenApi.dll
 D:\Users\Oguzhan\source\repos\TaskForMoodivationStack\TaskForMoodivationStack.WebApi\bin\Debug\net8.0\PagedList.Core.dll
 D:\Users\Oguzhan\source\repos\TaskForMoodivationStack\TaskForMoodivationStack.WebApi\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
@@ -43,3 +39,6 @@ D:\Users\Oguzhan\source\repos\TaskForMoodivationStack\TaskForMoodivationStack.We
 D:\Users\Oguzhan\source\repos\TaskForMoodivationStack\TaskForMoodivationStack.WebApi\obj\Debug\net8.0\TaskForMoodivationStack.WebApi.pdb
 D:\Users\Oguzhan\source\repos\TaskForMoodivationStack\TaskForMoodivationStack.WebApi\obj\Debug\net8.0\TaskForMoodivationStack.WebApi.genruntimeconfig.cache
 D:\Users\Oguzhan\source\repos\TaskForMoodivationStack\TaskForMoodivationStack.WebApi\obj\Debug\net8.0\ref\TaskForMoodivationStack.WebApi.dll
+D:\Users\Oguzhan\source\repos\TaskForMoodivationStack\TaskForMoodivationStack.WebApi\obj\Debug\net8.0\TaskForMoodivationStack.WebApi.sourcelink.json
+D:\Users\Oguzhan\source\repos\TaskForMoodivationStack\TaskForMoodivationStack.WebApi\bin\Debug\net8.0\Autofac.dll
+D:\Users\Oguzhan\source\repos\TaskForMoodivationStack\TaskForMoodivationStack.WebApi\bin\Debug\net8.0\Autofac.Extensions.DependencyInjection.dll

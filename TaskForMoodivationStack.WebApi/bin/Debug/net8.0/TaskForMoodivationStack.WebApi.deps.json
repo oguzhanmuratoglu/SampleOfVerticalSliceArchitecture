@@ -8,10 +8,9 @@
     ".NETCoreApp,Version=v8.0": {
       "TaskForMoodivationStack.WebApi/1.0.0": {
         "dependencies": {
-          "Carter": "8.0.0",
+          "Autofac.Extensions.DependencyInjection": "8.0.0",
           "Corex.Model.Infrastructure": "1.0.4",
           "FluentValidation.DependencyInjectionExtensions": "11.9.0",
-          "Mapster": "7.4.0",
           "MediatR": "12.2.0",
           "Microsoft.EntityFrameworkCore": "8.0.0",
           "Microsoft.EntityFrameworkCore.InMemory": "8.0.0",
@@ -21,13 +20,24 @@
           "TaskForMoodivationStack.WebApi.dll": {}
         }
       },
-      "Carter/8.0.0": {
+      "Autofac/6.4.0": {
         "dependencies": {
-          "FluentValidation": "11.9.0",
-          "Microsoft.Extensions.DependencyModel": "8.0.0"
+          "System.Diagnostics.DiagnosticSource": "4.7.1"
         },
         "runtime": {
-          "lib/net8.0/Carter.dll": {
+          "lib/net6.0/Autofac.dll": {
+            "assemblyVersion": "6.4.0.0",
+            "fileVersion": "6.4.0.0"
+          }
+        }
+      },
+      "Autofac.Extensions.DependencyInjection/8.0.0": {
+        "dependencies": {
+          "Autofac": "6.4.0",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.0"
+        },
+        "runtime": {
+          "lib/net6.0/Autofac.Extensions.DependencyInjection.dll": {
             "assemblyVersion": "8.0.0.0",
             "fileVersion": "8.0.0.0"
           }
@@ -61,25 +71,6 @@
           "lib/netstandard2.1/FluentValidation.DependencyInjectionExtensions.dll": {
             "assemblyVersion": "11.0.0.0",
             "fileVersion": "11.9.0.0"
-          }
-        }
-      },
-      "Mapster/7.4.0": {
-        "dependencies": {
-          "Mapster.Core": "1.2.1"
-        },
-        "runtime": {
-          "lib/net7.0/Mapster.dll": {
-            "assemblyVersion": "7.4.0.0",
-            "fileVersion": "7.4.0.0"
-          }
-        }
-      },
-      "Mapster.Core/1.2.1": {
-        "runtime": {
-          "lib/net7.0/Mapster.Core.dll": {
-            "assemblyVersion": "1.2.1.0",
-            "fileVersion": "1.2.1.0"
           }
         }
       },
@@ -158,18 +149,6 @@
         }
       },
       "Microsoft.Extensions.DependencyInjection.Abstractions/8.0.0": {},
-      "Microsoft.Extensions.DependencyModel/8.0.0": {
-        "dependencies": {
-          "System.Text.Encodings.Web": "8.0.0",
-          "System.Text.Json": "8.0.0"
-        },
-        "runtime": {
-          "lib/net8.0/Microsoft.Extensions.DependencyModel.dll": {
-            "assemblyVersion": "8.0.0.0",
-            "fileVersion": "8.0.23.53103"
-          }
-        }
-      },
       "Microsoft.Extensions.Logging/8.0.0": {
         "dependencies": {
           "Microsoft.Extensions.DependencyInjection": "8.0.0",
@@ -243,12 +222,7 @@
           }
         }
       },
-      "System.Text.Encodings.Web/8.0.0": {},
-      "System.Text.Json/8.0.0": {
-        "dependencies": {
-          "System.Text.Encodings.Web": "8.0.0"
-        }
-      }
+      "System.Diagnostics.DiagnosticSource/4.7.1": {}
     }
   },
   "libraries": {
@@ -257,12 +231,19 @@
       "serviceable": false,
       "sha512": ""
     },
-    "Carter/8.0.0": {
+    "Autofac/6.4.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-kENQQJqJeX0w8X4ohMUViPsx+YOjcWd5IGLS308w5cuygpJdlPPtgY+PSXItvMVzYCCe0ohBr3bcvnKhg1fJzg==",
-      "path": "carter/8.0.0",
-      "hashPath": "carter.8.0.0.nupkg.sha512"
+      "sha512": "sha512-tkFxl6wAPuwVhrlN8wuNADnd+k2tv4ReP7ZZSL0vjfcN0RcfC9v25ogxK6b03HC7D4NwWjSLf1G/zTG8Bw43wQ==",
+      "path": "autofac/6.4.0",
+      "hashPath": "autofac.6.4.0.nupkg.sha512"
+    },
+    "Autofac.Extensions.DependencyInjection/8.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-nGrXNpQX2FiZpIBydK9cxZnnoqP/cUd3k/53uRERYEqLtWzKtE15R6L+j5q5ax5Rv/+3wAIkOaPePkahfqrwjg==",
+      "path": "autofac.extensions.dependencyinjection/8.0.0",
+      "hashPath": "autofac.extensions.dependencyinjection.8.0.0.nupkg.sha512"
     },
     "Corex.Model.Infrastructure/1.0.4": {
       "type": "package",
@@ -284,20 +265,6 @@
       "sha512": "sha512-Ko++xvN7HUf4WlHJL6bhsybUj/uho8ApOYIdxGjpF8Ot7Fukz6LRfRJ06H0KXhWqmMHWEbu89hJbjKJHtg7b9g==",
       "path": "fluentvalidation.dependencyinjectionextensions/11.9.0",
       "hashPath": "fluentvalidation.dependencyinjectionextensions.11.9.0.nupkg.sha512"
-    },
-    "Mapster/7.4.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-RYGoDqvS4WTKIq0HDyPBBVIj6N0mluOCXQ1Vk95JKseMHEsbCXSEGKSlP95oL+s42IXAXbqvHj7p0YaRBUcfqg==",
-      "path": "mapster/7.4.0",
-      "hashPath": "mapster.7.4.0.nupkg.sha512"
-    },
-    "Mapster.Core/1.2.1": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-11lokmfliBEMMmjeqxFGNpqGXq6tN96zFqpBmfYeahr4Ybk63oDmeJmOflsATjobYkX248g5Y62oQ2NNnZaeww==",
-      "path": "mapster.core/1.2.1",
-      "hashPath": "mapster.core.1.2.1.nupkg.sha512"
     },
     "MediatR/12.2.0": {
       "type": "package",
@@ -376,13 +343,6 @@
       "path": "microsoft.extensions.dependencyinjection.abstractions/8.0.0",
       "hashPath": "microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512"
     },
-    "Microsoft.Extensions.DependencyModel/8.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-NSmDw3K0ozNDgShSIpsZcbFIzBX4w28nDag+TfaQujkXGazBm+lid5onlWoCBy4VsLxqnnKjEBbGSJVWJMf43g==",
-      "path": "microsoft.extensions.dependencymodel/8.0.0",
-      "hashPath": "microsoft.extensions.dependencymodel.8.0.0.nupkg.sha512"
-    },
     "Microsoft.Extensions.Logging/8.0.0": {
       "type": "package",
       "serviceable": true,
@@ -453,19 +413,12 @@
       "path": "swashbuckle.aspnetcore.swaggerui/6.4.0",
       "hashPath": "swashbuckle.aspnetcore.swaggerui.6.4.0.nupkg.sha512"
     },
-    "System.Text.Encodings.Web/8.0.0": {
+    "System.Diagnostics.DiagnosticSource/4.7.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-yev/k9GHAEGx2Rg3/tU6MQh4HGBXJs70y7j1LaM1i/ER9po+6nnQ6RRqTJn1E7Xu0fbIFK80Nh5EoODxrbxwBQ==",
-      "path": "system.text.encodings.web/8.0.0",
-      "hashPath": "system.text.encodings.web.8.0.0.nupkg.sha512"
-    },
-    "System.Text.Json/8.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-OdrZO2WjkiEG6ajEFRABTRCi/wuXQPxeV6g8xvUJqdxMvvuCCEk86zPla8UiIQJz3durtUEbNyY/3lIhS0yZvQ==",
-      "path": "system.text.json/8.0.0",
-      "hashPath": "system.text.json.8.0.0.nupkg.sha512"
+      "sha512": "sha512-j81Lovt90PDAq8kLpaJfJKV/rWdWuEk6jfV+MBkee33vzYLEUsy4gXK8laa9V2nZlLM9VM9yA/OOQxxPEJKAMw==",
+      "path": "system.diagnostics.diagnosticsource/4.7.1",
+      "hashPath": "system.diagnostics.diagnosticsource.4.7.1.nupkg.sha512"
     }
   }
 }
