@@ -4,12 +4,14 @@ using TaskForMoodivationStack.WebApi.Domain.Entities;
 using TaskForMoodivationStack.WebApi.Domain.ValueObjects;
 using TaskForMoodivationStack.WebApi.Features.Commands.Orders;
 using TaskForMoodivationStack.WebApi.Features.Queries.Orders;
+using static TaskForMoodivationStack.WebApi.Features.Commands.Orders.CreateOrder;
+using static TaskForMoodivationStack.WebApi.Features.Queries.Orders.GetOrdersByCustomerId;
 
 namespace TaskForMoodivationStack.WebApi.Services.Orders;
 
 public class OrderService(ApplicationDbContext context)
 {
-    public async Task<GetOrdersByCustomerId.Response> GetOrdersByCustomerId(GetOrdersByCustomerId.Query request, CancellationToken cancellationToken)
+    public async Task<GetOrdersByCustomerId.Response> GetOrdersByCustomerId(GetOrdersByCustomerIdQuery request, CancellationToken cancellationToken)
     {
         var orders = await context.Orders.Where(o=>o.CustomerId == request.CustomerId).ToListAsync(cancellationToken);
 
@@ -19,7 +21,7 @@ public class OrderService(ApplicationDbContext context)
             IsSuccess = true
         };
     }
-    public async Task<CreateOrder.Response> AddOrder(CreateOrder.Command request, CancellationToken cancellationToken)
+    public async Task<CreateOrder.Response> AddOrder(CreateOrderCommand request, CancellationToken cancellationToken)
     {
         var order = new OrderEntity
         {

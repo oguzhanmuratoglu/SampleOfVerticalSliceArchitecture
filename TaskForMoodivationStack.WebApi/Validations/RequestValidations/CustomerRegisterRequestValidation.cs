@@ -1,11 +1,11 @@
 ﻿using Corex.Model.Infrastructure;
 using FluentValidation;
 using FluentValidation.Results;
-using TaskForMoodivationStack.WebApi.Features.Commands.Customers;
+using static TaskForMoodivationStack.WebApi.Features.Commands.Customers.RegisterCustomer;
 
 namespace TaskForMoodivationStack.WebApi.Validations.RequestValidations;
 
-public class CustomerRegisterRequestValidation : AbstractValidator<RegisterCustomer.Command>, IRequestValidation
+public class CustomerRegisterRequestValidation : AbstractValidator<RegisterCustomerCommand>, IRequestValidation
 {
     public CustomerRegisterRequestValidation()
     {

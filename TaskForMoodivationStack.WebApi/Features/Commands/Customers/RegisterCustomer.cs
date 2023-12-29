@@ -13,16 +13,16 @@ namespace TaskForMoodivationStack.WebApi.Features.Commands.Customers;
 
 public class RegisterCustomer
 {
-    public record Command(string FirstName, string LastName, string Email, string Password) : IRequest<Response>;
+    public record RegisterCustomerCommand(string FirstName, string LastName, string Email, string Password) : IRequest<Response>;
     public class Response : ResultModel
     {
         public Guid Id { get; set; }
     }
 
 
-    public class Validator(ApplicationDbContext context) : IValidationHandler<Command>
+    public class Validator(ApplicationDbContext context) : IValidationHandler<RegisterCustomerCommand>
     {
-        public async Task<ResultModel> Validate(Command request)
+        public async Task<ResultModel> Validate(RegisterCustomerCommand request)
         {
             var requestValidationRules = new CustomerRegisterRequestValidation();
             var requestValidateResult = requestValidationRules.Validate(request);
@@ -46,7 +46,7 @@ public class RegisterCustomer
         }
     }
 
-    internal sealed class Handler : IRequestHandler<Command, Response>
+    internal sealed class Handler : IRequestHandler<RegisterCustomerCommand, Response>
     {
         private readonly ApplicationDbContext _context;
         private readonly ILogger<Handler> _logger;
@@ -56,7 +56,7 @@ public class RegisterCustomer
             _context = context;
             _logger = logger;
         }
-        public async Task<Response> Handle(Command request, CancellationToken cancellationToken)
+        public async Task<Response> Handle(RegisterCustomerCommand request, CancellationToken cancellationToken)
         {
             try
             {

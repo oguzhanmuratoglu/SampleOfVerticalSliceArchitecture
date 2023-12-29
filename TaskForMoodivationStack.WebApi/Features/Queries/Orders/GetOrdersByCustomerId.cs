@@ -13,16 +13,16 @@ namespace TaskForMoodivationStack.WebApi.Features.Queries.Orders;
 
 public class GetOrdersByCustomerId
 {
-    public record Query(Guid CustomerId) : IRequest<Response>;
+    public record GetOrdersByCustomerIdQuery(Guid CustomerId) : IRequest<Response>;
     public class Response : ResultModel
     {
         public List<OrderEntity> Orders { get; set; }
     }
 
 
-    public class Validator(ApplicationDbContext context) : IValidationHandler<Query>
+    public class Validator(ApplicationDbContext context) : IValidationHandler<GetOrdersByCustomerIdQuery>
     {
-        public async Task<ResultModel> Validate(Query request)
+        public async Task<ResultModel> Validate(GetOrdersByCustomerIdQuery request)
         {
             var requestValidationRules = new CustomerOrdersRequestValidation();
             var requestValidateResult = requestValidationRules.Validate(request);
@@ -41,7 +41,7 @@ public class GetOrdersByCustomerId
         }
     }
 
-    internal sealed class Handler : IRequestHandler<Query, Response>
+    internal sealed class Handler : IRequestHandler<GetOrdersByCustomerIdQuery, Response>
     {
         private readonly ApplicationDbContext _context;
         private readonly ILogger<Handler> _logger;
@@ -51,7 +51,7 @@ public class GetOrdersByCustomerId
             _context = context;
             _logger = logger;
         }
-        public async Task<Response> Handle(Query request, CancellationToken cancellationToken)
+        public async Task<Response> Handle(GetOrdersByCustomerIdQuery request, CancellationToken cancellationToken)
         {
             try
             {

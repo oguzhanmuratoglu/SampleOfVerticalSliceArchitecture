@@ -1,12 +1,13 @@
 ﻿using TaskForMoodivationStack.WebApi.Context;
 using TaskForMoodivationStack.WebApi.Domain.Entities;
 using TaskForMoodivationStack.WebApi.Features.Commands.Customers;
+using static TaskForMoodivationStack.WebApi.Features.Commands.Customers.RegisterCustomer;
 
 namespace TaskForMoodivationStack.WebApi.Services.Customers;
 
 public class CustomerService(ApplicationDbContext context)
 {
-    public async Task<RegisterCustomer.Response> AddCustomer(RegisterCustomer.Command request, CancellationToken cancellationToken)
+    public async Task<RegisterCustomer.Response> AddCustomer(RegisterCustomerCommand request, CancellationToken cancellationToken)
     {
         var customer = new CustomerEntity
         {

@@ -1,12 +1,11 @@
 ﻿using Corex.Model.Infrastructure;
-using FluentValidation.Results;
 using FluentValidation;
-using TaskForMoodivationStack.WebApi.Features.Commands.Orders;
-using TaskForMoodivationStack.WebApi.Features.Queries.Orders;
+using FluentValidation.Results;
+using static TaskForMoodivationStack.WebApi.Features.Queries.Orders.GetOrdersByCustomerId;
 
 namespace TaskForMoodivationStack.WebApi.Validations.RequestValidations;
 
-public class CustomerOrdersRequestValidation : AbstractValidator<GetOrdersByCustomerId.Query>, IRequestValidation
+public class CustomerOrdersRequestValidation : AbstractValidator<GetOrdersByCustomerIdQuery>, IRequestValidation
 {
     public CustomerOrdersRequestValidation()
     {

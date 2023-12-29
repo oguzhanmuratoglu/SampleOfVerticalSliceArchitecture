@@ -1,21 +1,28 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using TaskForMoodivationStack.WebApi.Features.Commands.Orders;
-using TaskForMoodivationStack.WebApi.Features.Queries.Orders;
+using static TaskForMoodivationStack.WebApi.Features.Commands.Orders.CreateOrder;
+using static TaskForMoodivationStack.WebApi.Features.Queries.Orders.GetOrdersByCustomerId;
 
 namespace TaskForMoodivationStack.WebApi.Controllers;
-public class OrdersController(IMediator mediator) : BaseApiController
+public class OrdersController : BaseApiController
 {
-    [HttpPost]
-    public async Task<CreateOrder.Response> AddAsync(CreateOrder.Command request)
+    private readonly IMediator _mediator;
+    public OrdersController(IMediator mediator)
     {
-        return await mediator.Send(request);
+        _mediator = mediator;
+    }
+    [HttpPost]
+    public async Task<IActionResult> AddAsync(CreateOrderCommand request)
+    {
+        var result = await _mediator.Send(request);
+        return Ok(result);
     }
 
     [HttpGet("{customerId}")]
-    public async Task<GetOrdersByCustomerId.Response> GetOrdersByCustomerIdAsync(Guid customerId)
+    public async Task<IActionResult> GetOrdersByCustomerIdAsync(Guid customerId)
     {
-        var request = new GetOrdersByCustomerId.Query(customerId);
-        return await mediator.Send(request);
+        var request = new GetOrdersByCustomerIdQuery(customerId);
+        var result = await _mediator.Send(request);
+        return Ok(result);
     }
 }

@@ -2,8 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 
 namespace TaskForMoodivationStack.WebApi.Controllers;
-[Route("api/[controller]/[action]")]
+
 [ApiController]
+[Route("api/[controller]/[action]")]
 public class BaseApiController : ControllerBase
 {
 }

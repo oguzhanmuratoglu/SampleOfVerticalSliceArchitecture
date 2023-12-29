@@ -12,16 +12,16 @@ namespace TaskForMoodivationStack.WebApi.Features.Commands.Orders;
 
 public class CreateOrder
 {
-    public record Command(Guid CustomerId, string PriceCurrency, decimal PriceAmount) : IRequest<Response>;
+    public record CreateOrderCommand(Guid CustomerId, string PriceCurrency, decimal PriceAmount) : IRequest<Response>;
     public class Response : ResultModel
     {
         public Guid Id { get; set; }
     }
 
 
-    public class Validator(ApplicationDbContext context) : IValidationHandler<Command>
+    public class Validator(ApplicationDbContext context) : IValidationHandler<CreateOrderCommand>
     {
-        public async Task<ResultModel> Validate(Command request)
+        public async Task<ResultModel> Validate(CreateOrderCommand request)
         {
             var requestValidationRules = new CreateOrderRequestValidation();
             var requestValidateResult = requestValidationRules.Validate(request);
@@ -40,7 +40,7 @@ public class CreateOrder
         }
     }
 
-    internal sealed class Handler : IRequestHandler<Command, Response>
+    internal sealed class Handler : IRequestHandler<CreateOrderCommand, Response>
     {
         private readonly ApplicationDbContext _context;
         private readonly ILogger<Handler> _logger;
@@ -50,7 +50,7 @@ public class CreateOrder
             _context = context;
             _logger = logger;
         }
-        public async Task<Response> Handle(Command request, CancellationToken cancellationToken)
+        public async Task<Response> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
         {
             try
             {

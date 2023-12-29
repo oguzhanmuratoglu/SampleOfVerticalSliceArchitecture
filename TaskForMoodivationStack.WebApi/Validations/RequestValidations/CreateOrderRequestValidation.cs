@@ -1,12 +1,11 @@
 ﻿using Corex.Model.Infrastructure;
 using FluentValidation;
 using FluentValidation.Results;
-using TaskForMoodivationStack.WebApi.Features.Commands.Customers;
-using TaskForMoodivationStack.WebApi.Features.Commands.Orders;
+using static TaskForMoodivationStack.WebApi.Features.Commands.Orders.CreateOrder;
 
 namespace TaskForMoodivationStack.WebApi.Validations.RequestValidations;
 
-public class CreateOrderRequestValidation : AbstractValidator<CreateOrder.Command>, IRequestValidation
+public class CreateOrderRequestValidation : AbstractValidator<CreateOrderCommand>, IRequestValidation
 {
     public CreateOrderRequestValidation()
     {

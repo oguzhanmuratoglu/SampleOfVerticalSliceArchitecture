@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TaskForMoodivationStack.WebApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c7218fe72cec1978ff330903929da0f0f23dfcd7")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bd21ac421178a8dd10a717d887253acbdae59e06")]
 [assembly: System.Reflection.AssemblyProductAttribute("TaskForMoodivationStack.WebApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TaskForMoodivationStack.WebApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
